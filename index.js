@@ -90,7 +90,7 @@ app.get(`/id_rada`, async (req, res) => {
   );
 
   pocet = udaje.data.total_results;
-  var id = 0;
+  var i = 0;
 
   res.write('<!DOCTYPE HTML>');
   res.write('<html lang ="cs">');
@@ -101,12 +101,15 @@ app.get(`/id_rada`, async (req, res) => {
   res.write('<a href="../">menu </a>');
   res.write('<br><br>');
 
-  // do {
-  i++;
-  res.write(`<h1>moudro dne:${udaje.data.slips[0].id}</h1>`);
-  // res.write(`<a href="/https://api.adviceslip.com/advice/${id}">${id}</a>`);
-  res.write('<br>');
-  //} while (id < max);
+  do {
+    res.write(`<h1>moudro dne:${udaje.data.slips[i].advice}</h1>`);
+    res.write(
+      `<a href="https://api.adviceslip.com/advice/${udaje.data.slips[i].id}">${udaje.data.slips[i].id}</a>`
+    );
+
+    res.write('<br>');
+    i++;
+  } while (i < pocet);
 
   res.write('</html>');
   res.end();
