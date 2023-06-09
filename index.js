@@ -26,6 +26,8 @@ app.get('/', (req, res) => {
 
   res.write('<br>');
   res.write('<a href="/rada">fakt dobra rada</a>');
+  res.write('<br>');
+  res.write('<a href="/id_rada">poucka pro kamarada</a>');
 
   res.write('</html>');
   res.end();
@@ -67,8 +69,48 @@ app.get(`/rada`, async (req, res) => {
   res.write('<meta charset="UTF-8">');
   res.write('</head>');
 
-  res.write(`<h1>${udaje.slip.id}</h1>`);
+  res.write('<a href="/rada">dalsi rada</a>');
   res.write('<br>');
+  res.write('<a href="../">menu </a>');
+  res.write('<br>');
+
+  res.write(`<h1>id:${udaje.data.slip.id}</h1>`);
+  res.write('<br>');
+  res.write(`<h1>moudro dne:${udaje.data.slip.advice}</h1>`);
+  res.write('<br>');
+
+  res.write('</html>');
+  res.end();
+});
+
+app.get(`/id_rada`, async (req, res) => {
+  const min = 1,
+    max = 224;
+
+  var id = 5;
+
+  const udaje = await axios.get(`https://api.adviceslip.com/advice/${id}`);
+
+  res.write('<!DOCTYPE HTML>');
+  res.write('<html lang ="cs">');
+  res.write('<head>');
+  res.write('<meta charset="UTF-8">');
+  res.write('</head>');
+
+  res.write('<a href="/rada">dalsi rada</a>');
+  res.write('<br>');
+  res.write('<a href="../">menu </a>');
+  res.write('<br>');
+
+  if (id >= min && id <= max) {
+    res.write(`<h1>id:${udaje.data.slip.id}</h1>`);
+    res.write('<br>');
+    res.write(`<h1>moudro dne:${udaje.data.slip.advice}</h1>`);
+    res.write('<br>');
+  } else {
+    res.write(`<h1>zadejte hodnoty mezi ${min} a ${max}</h1>`);
+    res.write('<br>');
+  }
 
   res.write('</html>');
   res.end();
