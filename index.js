@@ -27,6 +27,8 @@ app.get('/', (req, res) => {
   res.write('<br>');
   res.write('<a href="/rada">fakt dobra rada</a>');
   res.write('<br>');
+  res.write('<a href="/id_rada">b</a>');
+  res.write('<br>');
   res.write('<a href="/rady">hledani poucek</a>');
 
   res.write('</html>');
@@ -83,7 +85,7 @@ app.get(`/rada`, async (req, res) => {
 
 app.get(`/id_rada`, async (req, res) => {
   var slovo = 'learn';
-  slovo = req.body.slovo;
+  //slovo = req.body.slovo;
 
   var pocet;
 
