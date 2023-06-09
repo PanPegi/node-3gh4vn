@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
   res.write('<br>');
   res.write('<a href="/rada">fakt dobra rada</a>');
   res.write('<br>');
-  res.write('<a href="/id_rada">hledani poucek</a>');
+  res.write('<a href="/rady">hledani poucek</a>');
 
   res.write('</html>');
   res.end();
@@ -83,6 +83,8 @@ app.get(`/rada`, async (req, res) => {
 
 app.get(`/id_rada`, async (req, res) => {
   var slovo = 'learn';
+  slovo = req.body.slovo;
+
   var pocet;
 
   const udaje = await axios.get(
@@ -110,6 +112,26 @@ app.get(`/id_rada`, async (req, res) => {
     res.write('<br>');
     i++;
   } while (i < pocet);
+
+  res.write('</html>');
+  res.end();
+});
+
+app.get(`/rady`, async (req, res) => {
+  res.write('<!DOCTYPE HTML>');
+  res.write('<html lang ="cs">');
+  res.write('<head>');
+  res.write('<meta charset="UTF-8">');
+  res.write('</head>');
+
+  res.write('<a href="../">menu</a>');
+  res.write('<br>');
+
+  res.write('<form action="app.post(/id_rada)" method="POST">');
+  res.write('co hledate');
+  res.write('<input type="text" name="slovo">');
+  res.write(' <input type="submit" value="Submit">');
+  res.write('</form>');
 
   res.write('</html>');
   res.end();
