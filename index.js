@@ -27,7 +27,7 @@ app.get('/', (req, res) => {
   res.write('<br>');
   res.write('<a href="/rada">fakt dobra rada</a>');
   res.write('<br>');
-  res.write('<a href="/id_rada">poucka pro kamarada</a>');
+  res.write('<a href="/id_rada">hledani poucek</a>');
 
   res.write('</html>');
   res.end();
@@ -84,12 +84,15 @@ app.get(`/rada`, async (req, res) => {
 });
 
 app.get(`/id_rada`, async (req, res) => {
-  const min = 1,
-    max = 224;
+  var slovo = 'learn';
+  var pocet;
+  var id = 0;
 
-  var id = 5;
+  const udaje = await axios.get(
+    `https://api.adviceslip.com/advice/search/${slovo}`
+  );
 
-  const udaje = await axios.get(`https://api.adviceslip.com/advice/${id}`);
+  pocet = udaje.data.total_results;
 
   res.write('<!DOCTYPE HTML>');
   res.write('<html lang ="cs">');
@@ -97,12 +100,14 @@ app.get(`/id_rada`, async (req, res) => {
   res.write('<meta charset="UTF-8">');
   res.write('</head>');
 
-  res.write('<a href="/rada">dalsi rada</a>');
-  res.write('<br>');
   res.write('<a href="../">menu </a>');
+  res.write('<br><br>');
+
+  res.write(`<h1>moudro dne:${udaje.data.slips.advice[1]}</h1>`);
+  // res.write(`<a href="/https://api.adviceslip.com/advice/${id}">${id}</a>`);
   res.write('<br>');
 
-  if (id >= min && id <= max) {
+  /* if (id >= min && id <= max) {
     res.write(`<h1>id:${udaje.data.slip.id}</h1>`);
     res.write('<br>');
     res.write(`<h1>moudro dne:${udaje.data.slip.advice}</h1>`);
@@ -110,7 +115,7 @@ app.get(`/id_rada`, async (req, res) => {
   } else {
     res.write(`<h1>zadejte hodnoty mezi ${min} a ${max}</h1>`);
     res.write('<br>');
-  }
+  }*/
 
   res.write('</html>');
   res.end();
