@@ -14,13 +14,18 @@ app.get('/', (req, res) => {
   res.write('</head>');
 
   res.write('<body>');
-  res.write('<h1>cc</h1>');
+  /* 
+ res.write('<h1>cc</h1>');
   res.write('</body>');
   res.write('<a href="/stats">Statistika</a>');
   res.write('<br>');
   res.write('<a href="/spse.html">ustavek</a>');
   res.write('<br>');
   res.write('<a href="/profile">profil</a>');
+  */
+
+  res.write('<br>');
+  res.write('<a href="/rada">fakt dobra rada</a>');
 
   res.write('</html>');
   res.end();
@@ -47,6 +52,22 @@ app.get(`/profile`, async (req, res) => {
   res.write(`<img src="${gh.data.avatar_url}"width="150px" height="150px" />`);
   res.write('<br>');
   res.write(`<h1>${gh.data.bio}</h1>`);
+  res.write('<br>');
+
+  res.write('</html>');
+  res.end();
+});
+
+app.get(`/rada`, async (req, res) => {
+  const udaje = await axios.get('https://api.adviceslip.com/advice');
+
+  res.write('<!DOCTYPE HTML>');
+  res.write('<html lang ="cs">');
+  res.write('<head>');
+  res.write('<meta charset="UTF-8">');
+  res.write('</head>');
+
+  res.write(`<h1>${udaje.slip.id}</h1>`);
   res.write('<br>');
 
   res.write('</html>');
